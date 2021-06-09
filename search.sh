@@ -15,5 +15,3 @@ elif [ os="UBUNTU" ]
 fi
 
 snap find $search
-
-test
