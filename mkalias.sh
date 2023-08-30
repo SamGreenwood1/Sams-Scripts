@@ -1,7 +1,8 @@
-echo Enter name of alias:
+echo "Enter name of alias:"
 read
 name=$REPLY
-echo Enter command :
+echo "Enter command:"
 read
 command=$REPLY
-echo "alias $name='$command'" >> ~/.bashrc
+echo "alias $name='$command'" >> ~/.bash_aliases
+alias
