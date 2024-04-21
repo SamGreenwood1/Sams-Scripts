@@ -1,0 +1,11 @@
+| Site Name | Repo Name | Repo Org | Theme Name | Theme Dev | Site Dir |
+|---|---|---|---|---|---|
+| cv | cv | SamGreenwood1 | hugo-profile | gurusabarish | cv.samgreenwood.ca |
+| Greenwood Tech Docs | greenwoodtech-docs | greenwood-tech-services | hugo-theme-techdoc | thingsym | docs.samgreenwood.tech |
+| Greenwood Tech Website | greenwoodtech-website | greenwood-tech-services | blowfish | nunocoracao | samgreenwood.tech |
+| Camp Proposals | camp-proposals | SamGreenwood1 | hugo-theme-techdoc | thingsym | camp-proposals.samgreenwood.ca |
+| New Peronal Site | personal-site | SamGreenwood1 | hugo-theme-pico | negrel | new.samgreenwood.ca |
+| Camp Proposals w Jared's Feedback | camp-proposals-feedback | SamGreenwood1 | hugo-theme-techdoc | thingsym | camp-proposals-feedback.samgreenwood.ca |
+| Sam Goes BTS Website | samgoesbts-website | SamGreenwood1 | hugo-creator | CloudWithChris | samgoesbts.com |
+| CG Program Bank | cg-program-bank | SamGreenwood1 | inventory-hugo-theme | unicef | bank.cgapps.site |
+

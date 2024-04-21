@@ -1,0 +1,27 @@
+
+
+
+
+git add .
+
+echo 'Enter the commit message:'
+read commitMessage
+
+git commit -m "$commitMessage"
+
+echo 'Enter the name of the branch:'
+read branch
+
+git push $branch $branch
+
+read
+case "$1" in
+    -n|--new)
+      
+      ;;
+    
+	*)
+      echo "Invalid option. Usage: vercheck -a|--apachecfg-script -f|--file <filename> -i|--favicon -nr|--newrepo"
+      ;;
+  esac
+}

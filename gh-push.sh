@@ -1,7 +1,13 @@
-search=$(history 1 | tail -2 | head -1 | cut -c 21-)
-echo system $search
-git add $search
-echo WHat do you want you commit message to be?
+git add .
+
+echo 'Enter the commit message:'
+read commitMessage
+
+git commit -m "$commitMessage"
+
+echo 'Enter the name of the branch:'
+read branch
+
+git push origin $branch
+
 read
-git commit -m $REPLY
-git push

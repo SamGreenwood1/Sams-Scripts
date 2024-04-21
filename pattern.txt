@@ -1,0 +1,4 @@
+hugo.yaml
+config.yaml
+hugo.toml
+config.toml

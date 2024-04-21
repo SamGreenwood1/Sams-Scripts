@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Path to the site info table file
+site_info_table_file=~/scripts/script-files/site_info_table.txt
+
+#sites=$(find ~ -maxdepth 1 -type d -name "*.*" -not -path '*/\.*' -printf '%f\n')
+
+# Loop through the table and parse the repo info for each site
+while read -r site_name repo_name repo_org theme_name theme_dev; do
+  # Check if the directory contains a Hugo site
+  site_dir=~/$sites
+  if [ -d "$site_dir" ]; then
+    # Change into the directory
+    cd "$site_dir"
+
+    # Initialize a Git repository in the site directory
+    git init
+    git add .
+    git commit -m "Initial commit"
+
+    # Check if the repository already exists on GitHub
+    if gh repo view "$repo_org/$repo_name" &>/dev/null; then
+      # GitHub repository already exists
+      echo "Repository $repo_org/$repo_name already exists on GitHub"
+    else
+      # Create a new GitHub repository using gh cli
+      gh repo create "$repo_org/$repo_name" --private --confirm
+    fi
+
+    # Push the repository to GitHub using the SSH URL
+    git remote add origin "git@github.com:$repo_org/$repo_name.git"
+    git push -u origin master
+
+    # Add the specified Hugo theme to the site using git submodule
+    git submodule add "https://github.com/$theme_dev/$theme_name.git" "themes/$theme_name"
+
+    # Change the theme setting in the site's config file to the specified theme name
+    if [ -f "config.toml" ]; then
+      sed -i "s/^theme = .*/theme = \"$theme_name\"/" config.toml
+    elif [ -f "config.yml" ]; then
+      sed -i "s/^theme: .*/theme: $theme_name/" config.yml
+    elif [ -f "config.yaml" ]; then
+      sed -i "s/^theme: .*/theme: $theme_name/" config.yaml
+    else
+      echo "Unable to find a Hugo config file"
+      exit 1
+    fi
+
+    # Push the changes to the repository on GitHub
+    git add .
+    git commit -m "Add theme $theme_name"
+    git push
+
+    # Change back to the parent directory
+    cd ..
+  else
+    echo "Site directory $site_dir does not exist"
+  fi
+done < "$site_info_table_file"

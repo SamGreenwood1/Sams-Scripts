@@ -1,0 +1,40 @@
+hugo-setup(){
+read -p "Enter repo name: " repo
+read -p "Enter remote name: " remote
+read -p "Enter remote urk: " remote-url
+read -p "Enter branch name: " branch
+ead -p "Enter comment (press enter to skip): " comment
+case "$#" in
+ -ns |--new-site)
+   hugo new site $2
+   gh repo add $2
+   (cd $2 \
+   git init \
+   git add . \
+   git commit -m "$comment" \
+   git branch -M $branch \
+   git remote add $remote $remote-url \
+   git push -u $remote $branch)
+  ;;
+ -nr|--newrepo)
+   git init \
+   git add . \
+   git commit -m "$comment" \
+   git branch -M $branch \
+   git remote add $remote $remote-url \
+   git push -u $remote $branch
+ ;;
+ -gm|--install-go-mod)
+
+
+ -hm|--install-hugo-mod)
+
+ -r|--remote) # declare remotes
+
+
+ -mr|--multiple-remotes) 
+ 
+
+ -all) ## all remotes
+
+}

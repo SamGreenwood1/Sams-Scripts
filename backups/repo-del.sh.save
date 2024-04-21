@@ -1,0 +1,40 @@
+  GNU nano 5.4                 scripts/repo-del.sh                           
+# Reset Git to remove stored credentials
+git config --global --unset-all credential.helper
+
+# Remove existing repositories
+while read -r repo; do
+  # Extract the repository organization and name from the URL
+  repo_org=$(echo "$repo" | cut -d '/' -f 4)
+  repo_name=$(echo "$repo" | cut -d '/' -f 5)
+  
+  # Remove the repository
+  gh repo delete "${repo_org}/${repo_name}" --yes
+done < ~/scripts/script-files/repos.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                              [ Read 12 lines ]
+^G Help        ^O Write Out   ^W Where Is    ^K Cut         ^T Execute
+^X Exit        ^R Read File   ^\ Replace     ^U Paste       ^J Justify
