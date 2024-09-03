@@ -1,0 +1,84 @@
+Aliases matching 'bat':
+alias {cat,bat}='batcat'
+
+Aliases matching 'bcd':
+alias cdn='cd ../'
+alias fcd='cd ../'
+
+Aliases matching 'bcd':
+alias cdn='cd ../'
+alias fcd='cd ../'
+
+Aliases matching 'bcd':
+alias cdn='cd ../'
+alias fcd='cd ../'
+
+Aliases matching '{cat,bat}':
+alias bat='batcat'
+
+Aliases matching '{c,cl,cls}':
+alias c='clear'
+alias c='clear'
+alias {c,cls}='clear'
+alias cls='clear'
+alias cls='clear'
+
+Aliases matching 'c':
+alias {c,cl,cls}='clear'
+alias {c,cls}='clear'
+alias cls='clear'
+alias cls='clear'
+
+Aliases matching 'c':
+alias {c,cl,cls}='clear'
+alias {c,cls}='clear'
+alias cls='clear'
+alias cls='clear'
+
+Aliases matching '{c,cls}':
+alias {c,cl,cls}='clear'
+alias c='clear'
+alias c='clear'
+alias cls='clear'
+alias cls='clear'
+
+Aliases matching 'cdn':
+alias bcd='cd ../'
+alias bcd='cd ../'
+alias bcd='cd ../'
+alias fcd='cd ../'
+
+Aliases matching 'cdn':
+alias fcd='cd ../sam/'
+
+Aliases matching 'cls':
+alias {c,cl,cls}='clear'
+alias c='clear'
+alias c='clear'
+alias {c,cls}='clear'
+
+Aliases matching 'cls':
+alias {c,cl,cls}='clear'
+alias c='clear'
+alias c='clear'
+alias {c,cls}='clear'
+
+Aliases matching 'fcd':
+alias bcd='cd ../'
+alias bcd='cd ../'
+alias bcd='cd ../'
+alias cdn='cd ../'
+
+Aliases matching 'fcd':
+alias cdn='cd ../sam/'
+
+Aliases matching 'l':
+alias lo='logout'
+
+Aliases matching 'l':
+alias lo='logout'
+
+Aliases matching 'lo':
+alias l='logout'
+alias l='logout'
+
