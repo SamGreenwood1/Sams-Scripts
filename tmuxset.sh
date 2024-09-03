@@ -160,5 +160,5 @@ setupAttach() {
   else
     echo -e "Session: $1 created successfully.\nUse 'tmux a -t $1' to attach to the session."
   fi
-  return
+  return 0
 }
