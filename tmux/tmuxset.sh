@@ -22,23 +22,6 @@ tmux_manage() {
   fi
 
   case "$1" in
-    ps)
-      echo "Profile: PS"
-      tmux new -d -s "ps"
-      local profile="$2" window="$1:0"
-      paneDir="$sitePathDIR/$pane"
-
-      echo "Function: defaultTemplate"
-
-      if [ "$1" != "all" ]; then
-      	if [ "$3" == "-s" ]; then
-         build "$1"
-	else
-	  echo -e "Profile: $profile\nWindow: $window\nPane Directory: $paneDir"
-      	  build "$1"
-        fi
-       fi
-      ;;
     -s|--silent)
       echo "Silent mode"
       for category in "${categories[@]}" "management" "all" "ps"; do
@@ -70,7 +53,7 @@ tmux_manage() {
 # Function to apply a default template
 defaultTemplate() {
   echo "func: defaultTemplate"
-  local profile="$2" window="$1:0"
+  local profile="$1" window="$1:0"
   paneDir="$sitePathDIR/$pane"
 
   echo "Function: defaultTemplate"
@@ -90,7 +73,18 @@ build() {
   case $profile in
     management)
       management "$1"
-      ;;
+    ;;
+    ps)
+      tmux new -d -s "Personal"
+      for pane in "${sitePaneDIRs[@]}"; do
+        tmux new-window -t "Personal.$1"
+        tmux splitw -h -p 50 -t "Personal.$1"
+        tmux splitw -v -p 50 -t "Personal.:0.1"
+        tmux selectp -t "$1:0.0" -T "$pane"  # Fixed indexing
+        tmux send-keys -t "$1:0.0" "cd $sitePathDIR/$pane" Enter
+      done
+      setupAttach "$1"
+    ;;
     *)
       tmux new -d -s "$profile"
       for pane in "${sitePaneDIRs[@]}"; do
@@ -101,7 +95,7 @@ build() {
         tmux send-keys -t "$1:0.0" "cd $sitePathDIR/$pane" Enter
       done
       setupAttach "$1"
-      ;;
+    ;;
   esac
 }
 
@@ -162,3 +156,5 @@ setupAttach() {
   fi
   return 0
 }
+
+tmux_manage "$#"
