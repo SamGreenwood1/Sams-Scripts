@@ -76,23 +76,27 @@ build() {
     ;;
     ps)
       tmux new -d -s "Personal"
-      for pane in "${sitePaneDIRs[@]}"; do
-        tmux new-window -t "Personal.$1"
-        tmux splitw -h -p 50 -t "Personal.$1"
-        tmux splitw -v -p 50 -t "Personal.:0.1"
-        tmux selectp -t "$1:0.0" -T "$pane"  # Fixed indexing
-        tmux send-keys -t "$1:0.0" "cd $sitePathDIR/$pane" Enter
+      tmux new-window -t "Personal.$1"
+      tmux splitw -h -p 50 -t "Personal.$1"
+      tmux splitw -v -p 50 -t "Personal.:0.1"
+      local i=0
+      for pane in "${manPaneDIRs[@]}"; do
+        tmux selectp -t "Personal:0.$i" -T "$pane"
+        tmux send-keys -t "Personal:0.$i" "cd $sitePathDIR/$pane" Enter
+        i=$((i+1))
       done
       setupAttach "$1"
     ;;
     *)
       tmux new -d -s "$profile"
-      for pane in "${sitePaneDIRs[@]}"; do
-        tmux new-window -t "$1"
-        tmux splitw -h -p 50 -t "$1:0"
-        tmux splitw -v -p 50 -t "$1:0.1"
-        tmux selectp -t "$1:0.0" -T "$pane"  # Fixed indexing
-        tmux send-keys -t "$1:0.0" "cd $sitePathDIR/$pane" Enter
+      tmux rename-window -t "$profile"
+      tmux splitw -h -p 50 -t "$1:0"
+      tmux splitw -v -p 50 -t "$1:0.1"
+      local i=0
+      for pane in "${manPaneDIRs[@]}"; do
+        tmux selectp -t "$profile:0.$i" -T "$pane"
+        tmux send-keys -t "$profile:0.$i" "cd $sitePathDIR/$pane" Enter
+        i=$((i+1))
       done
       setupAttach "$1"
     ;;
