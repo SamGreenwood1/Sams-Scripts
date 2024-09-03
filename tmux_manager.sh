@@ -7,8 +7,8 @@
 # Description: A script to manage tmux sessions
 # Shell: bash
 
-# Source external variables and functions
-source ~/.startup/vars.sh
+# Use the dot command for portability
+. ~/.startup/vars.sh
 
 tmux_manager() {
     case "$1" in
@@ -171,7 +171,7 @@ build() {
             tmn "$profile"
             4PinSDir
             split
-            for ((i=0; i<4; i++)); do
+            for i in {0..3}; do
                 tms "$profile:$catNum.$i"
                 tsk "$tmCDPathVarS" Enter
             done
@@ -200,7 +200,7 @@ all() {
     4cat
     split
     4PinSDir
-    for ((i=0; i<4; i++)); do
+    for i in {0..3}; do
         tms "$idnc" /
         tsk "$tmCDPathVarS" Enter
     done
