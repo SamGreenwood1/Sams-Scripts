@@ -8,6 +8,8 @@
 # Shell: bash
 
 # Source external variables and functions
+source ~/.startup/vars.sh
+
 tmux_manager() {
     case "$1" in
         ps)
@@ -15,8 +17,8 @@ tmux_manager() {
             defaultTemplate "ps" "$profile"
         ;;
         info)
-            echo -e "Window: $window\nPane: $pane\nPane Directory: $paneDir\nSite Path Directory: $sitePathDIR"
-            echo -e "Site Pane Directories: ${sitePaneDIRs[@]}\nManagement Pane Directories: ${manPaneDIRs[@]}"
+            echo -e "Window: ${window:-N/A}\nPane: ${pane:-N/A}\nPane Directory: ${paneDir:-N/A}\nSite Path Directory: ${sitePathDIR:-N/A}"
+            echo -e "Site Pane Directories: ${sitePaneDIRs[*]:-N/A}\nManagement Pane Directories: ${manPaneDIRs[*]:-N/A}"
         ;;
         m|management)
             local profile="management"
@@ -32,9 +34,16 @@ tmux_manager() {
             all
         ;;
         -n|--new)
+            if [ -z "$2" ]; then
+                echo "Usage: tmux_manager --new <session>"
+                return 1
+            fi
+
             case "$2" in
-                all|management|personal|camp|rempath|family|other) tn "$2" ;;
-                build) 
+                all|management|personal|camp|rempath|family|other)
+                    tn "$2"
+                ;;
+                build)
                     tn all
                     tn management
                     tn personal
@@ -43,12 +52,12 @@ tmux_manager() {
                     tn family
                     tn other
                 ;;
-                "") 
-                    echo "Usage: tmux_manager --new <session>"
+                *)
+                    echo "Invalid session type. Use 'tmux_manager --help' for more information."
                     return 1
                 ;;
-                *) tn "$2" ;;
             esac
+
             if [ -z "$(tmux ls | grep "$2")" ]; then
                 tmux new -s "$2" -d
             else
@@ -56,8 +65,15 @@ tmux_manager() {
             fi
         ;;
         -s|--silent)
+            if [ -z "$2" ]; then
+                echo "Usage: tmux_manager --silent <session>"
+                return 1
+            fi
+
             case "$2" in
-                all|management|personal|camp|rempath|family|other) tn "$2" -s ;;
+                all|management|personal|camp|rempath|family|other)
+                    tn "$2" -s
+                ;;
                 build)
                     tn all -s
                     tn management -s
@@ -67,12 +83,13 @@ tmux_manager() {
                     tn family -s
                     tn other -s
                 ;;
-                test) tn test ;;
-                "") 
-                    echo "Usage: tmux_manager --silent <session>"
+                test)
+                    tn test
+                ;;
+                *)
+                    echo "Invalid session type. Use 'tmux_manager --help' for more information."
                     return 1
                 ;;
-                *) tn "$2" -s ;;
             esac
         ;;
         ls)
@@ -80,8 +97,12 @@ tmux_manager() {
                 -a|--all)
                     echo -e "All tmux sessions:\n$(tmux list-sessions)\nWindows:\n$(tmux lsw -a)\nPanes:\n$(tmux lsp -a)"
                 ;;
-                -l) tmux ls ;;
-                *) tmux ls | cut -d':' -f1 ;;
+                -l)
+                    tmux ls
+                ;;
+                *)
+                    tmux ls | cut -d':' -f1
+                ;;
             esac
         ;;
         reset)
@@ -128,14 +149,14 @@ tmux_manager() {
 defaultTemplate() {
     local profile="$2"
     local window="$1:0"
-    local paneDir="$sitePathDIR/$pane"
+    local paneDir="${sitePathDIR}/${pane:-N/A}"
     echo "Function: defaultTemplate"
 
     if [ "$profile" != "all" ]; then
         if [ "$3" == "-s" ]; then
             build "$1"
         else
-            echo -e "$infoLine"
+            echo -e "${infoLine:-N/A}"
         fi
         return 0
     fi
@@ -180,7 +201,7 @@ all() {
     split
     4PinSDir
     for ((i=0; i<4; i++)); do
-        tms $idnc /
+        tms "$idnc" /
         tsk "$tmCDPathVarS" Enter
     done
     if [ $i -eq 3 ]; then
@@ -203,10 +224,10 @@ management4All() {
 }
 
 setupAttach() {
-    tmsg $dt "screen-256color"
-    tmsg $pbs "top"
-    tmsg mouse on
-    tms $1:0.0
+    tmsg "$dt" "screen-256color"
+    tmsg "$pbs" "top"
+    tmsg "mouse on"
+    tms "$1:0.0"
     if [ "$3" == "-y" ]; then
         $eea "You are about to attach to the session."
         ta "$1"
@@ -219,4 +240,7 @@ killSessions() {
     tmls | cut -d':' -f1 | while read -r session_name; do
         tkill "$session_name"
     done
-} < ~/.startup/vars.sh
+}
+
+# Call the tmux_manager function with all the provided arguments
+tmux_manager "$@"
