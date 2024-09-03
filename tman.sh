@@ -21,7 +21,7 @@ tman() {
         -n|--new)
             case "$2" in
                 all|management|personal|ps|camp|rempath|family|other)
-                    tmuxset "$2"
+                    . ~/scripts/tmuxset.sh "$2"
                 ;;
                 build)
                     tmuxset all
