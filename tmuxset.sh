@@ -7,11 +7,11 @@
 # Description: A script to manage tmux sessions
 # Shell: bash
 
-echo "$0"
-echo "tmuxset initiated"
+echo -e "$1"
+echo -e "tmuxset initiated\nInput: $1"
 
 # Source external variables
-. ~/.startup/vars.sh
+source ~/.startup/vars.sh
 
 # Function to manage tmux sessions
 tmux_manage() {

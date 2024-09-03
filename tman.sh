@@ -9,7 +9,7 @@
 
 # Source external variables and functions
 if [ -f ~/.startup/vars.sh ]; then
-    . ~/.startup/vars.sh
+    source ~/.startup/vars.sh
 else
     echo "Error: ~/.startup/vars.sh not found."
     exit 1
