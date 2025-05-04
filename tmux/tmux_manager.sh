@@ -10,6 +10,33 @@
 # Use the dot command for portability
 . ~/.startup/vars.sh
 
+# Define missing arrays (customize as needed)
+silentCategories=("personal" "management" "camp" "rempath" "family" "other")
+categories=("personal" "management" "camp" "rempath" "family" "other")
+
+# Check for tmux dependency
+if ! command -v tmux >/dev/null 2>&1; then
+    echo "Error: tmux is not installed or not in PATH." >&2
+    exit 1
+fi
+
+# Stub missing functions (fill in or source as needed)
+tn() { echo "[stub] tn $@"; }
+tmn() { echo "[stub] tmn $@"; }
+tms() { echo "[stub] tms $@"; }
+tsk() { echo "[stub] tsk $@"; }
+tmrn() { echo "[stub] tmrn $@"; }
+tmsg() { echo "[stub] tmsg $@"; }
+ta() { echo "[stub] ta $@"; }
+tkill() { echo "[stub] tkill $@"; }
+tmls() { tmux ls; }
+4PinSDir() { echo "[stub] 4PinSDir $@"; }
+split() { echo "[stub] split $@"; }
+4cat() { echo "[stub] 4cat $@"; }
+buildAll() { echo "[stub] buildAll $@"; }
+customInteractive() { echo "[stub] customInteractive $@"; }
+eea() { echo "[stub] eea $@"; }
+
 tmux_manager() {
     case "$1" in
         ps)
@@ -107,7 +134,7 @@ tmux_manager() {
         ;;
         reset)
             echo -e "\nResetting all tmux sessions...\n"
-            for session in $(tmux ls | cut -d':' -f1); do
+            tmux ls | cut -d':' -f1 | while read -r session; do
                 tmux kill-session -t "$session"
             done
             echo -e "All tmux sessions have been reset.\n"
