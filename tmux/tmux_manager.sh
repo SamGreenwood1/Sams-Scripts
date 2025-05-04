@@ -41,6 +41,9 @@ split() { echo "[stub] split $@"; }
 buildAll() { echo "[stub] buildAll $@"; }
 customInteractive() { echo "[stub] customInteractive $@"; }
 eea() { echo "[stub] eea $@"; }
+# Stubs for missing functions from vars.sh
+splitw() { echo "[stub] splitw $@"; }
+tmuxset() { echo "[stub] tmuxset $@"; }
 
 tmux_manager() {
     case "$1" in
@@ -93,7 +96,12 @@ tmux_manager() {
             if [ -z "$(tmux ls | grep "$2")" ]; then
                 tmux new -s "$2" -d
             else
-                tmux attach -t "$2"
+                # Check if session exists before attaching
+                if tmux has-session -t "$2" 2>/dev/null; then
+                    tmux attach -t "$2"
+                else
+                    echo "Session $2 does not exist."
+                fi
             fi
         ;;
         -s|--silent)
@@ -140,7 +148,7 @@ tmux_manager() {
         reset)
             echo -e "\nResetting all tmux sessions...\n"
             tmux ls | cut -d':' -f1 | while read -r session; do
-                tmux kill-session -t "$session"
+                tkill "$session"
             done
             echo -e "All tmux sessions have been reset.\n"
             for category in "${categories[@]}"; do
