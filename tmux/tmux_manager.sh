@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Ensure the script is running with bash, not sh or dash
+if [ -z "$BASH_VERSION" ]; then
+    exec bash "$0" "$@"
+fi
+
 # Name: tmux_manager.sh
 # Author: Sam Greenwood
 # Date: 2024-05-05
